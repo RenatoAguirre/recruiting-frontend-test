@@ -10,6 +10,7 @@ function App() {
   const { regularInvoices, creditNotes, isLoading, error } = useInvoices();
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [selectedCreditNotes, setSelectedCreditNotes] = useState([]);
+  const [assignedCreditNotes, setAssignedCreditNotes] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleInvoiceSelect = (invoice) => {
@@ -35,6 +36,7 @@ function App() {
   };
 
   const handleAssign = () => {
+    setAssignedCreditNotes((prev) => [...prev, ...selectedCreditNotes]);
     setIsModalOpen(true);
   };
 
@@ -45,7 +47,11 @@ function App() {
   };
 
   const filteredCreditNotes = selectedInvoice
-    ? creditNotes.filter((note) => note.reference === selectedInvoice.id)
+    ? creditNotes.filter(
+        (note) =>
+          note.reference === selectedInvoice.id &&
+          !assignedCreditNotes.some((assigned) => assigned.id === note.id)
+      )
     : [];
 
   const invoiceAmount = selectedInvoice ? getAmountInCLP(selectedInvoice) : 0;
@@ -103,7 +109,11 @@ function App() {
               ))}
               {filteredCreditNotes.length === 0 && (
                 <div className="text-gray-500 text-center py-4">
-                  No hay notas de crédito disponibles para esta factura
+                  {creditNotes.some(
+                    (note) => note.reference === selectedInvoice.id
+                  )
+                    ? "Todas las notas de crédito ya han sido asignadas"
+                    : "No hay notas de crédito disponibles para esta factura"}
                 </div>
               )}
             </div>
