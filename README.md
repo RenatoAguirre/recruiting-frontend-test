@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+Este proyecto es una aplicación web que permite asignar notas de crédito a facturas.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Lo deployé en: https://recruiting-frontend-test-1o2ou4wqc-renato-aguirres-projects.vercel.app/
 
-## Available Scripts
+## Instalación (si quieres probarlo manual)
 
-In the project directory, you can run:
+1. Clona el repositorio
 
-### `npm start`
+2. Instala las dependencias:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+npm install
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. Inicia la aplicación:
 
-### `npm test`
+```bash
+npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Notas
 
-### `npm run build`
+Al principio me costo entender un poco el enunciado, con las imagenes igual me quedo más claro lo que había que hacer, por lo que entendí había otra tarea antes de esta en donde me imagino se explicaba mas la api. asi que solo use el endpoint de la api que me daban.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Intente hacer todo desde el comienzo ordenado, pensando en que iba a hacer los bonus y por lo tanto capaz tenia que cambiar harto codigo.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+No lo hice pensando en mobile, pero se puede adaptar
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+hay q recargar la pagina para volver a ver las notas de credito
 
-### `npm run eject`
+Con más tiempo haría que fueran persistentes las notas de credito asignadas a una factura (puede ser con un backend, desconozco si la api tiene un endpoint para eso).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+También haría que el usuario pueda seleccionar una factura y ver las notas de crédito ya asignadas a esa factura.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Intenté hacer los estilos lo mas parecidos aunque tailwind no es mi fuerte jajajaj
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Tabien cambiaría todo el proyecto a typescript :)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Podría ponerle nombres mas descriptivos a las facturas y notas de credito. y no por el id
 
-## Learn More
+Los colores de los estilos podrían ser variables, enves de estar hardcodeados
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+hice todos los bonus
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Dejé algunos comentarios en el codigo con mas mejoras que haría
