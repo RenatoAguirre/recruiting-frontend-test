@@ -1,40 +1,8 @@
 import { DocumentItemPropTypes } from "../types/propTypes";
-
-const USD_TO_CLP = 979.9; //esto podría ser un lamado a alguna api
-const CLP_TO_USD = 0.001021;
+import { getFormattedAmounts } from "../utils/currency";
 
 export function DocumentItem({ document, isSelected, onSelect, referenceId }) {
   const isInvoice = document.type !== "credit_note";
-
-  const formatCurrency = (amount, currency) => {
-    return new Intl.NumberFormat("es-CL", {
-      style: "currency",
-      currency: currency,
-      currencyDisplay: "symbol",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const getAmountDisplay = () => {
-    const mainAmount =
-      document.currency === "USD"
-        ? document.amount * USD_TO_CLP
-        : document.amount;
-    const secondaryAmount =
-      document.currency === "USD"
-        ? document.amount
-        : document.amount * CLP_TO_USD;
-
-    return (
-      <>
-        {formatCurrency(mainAmount, "CLP")}
-        <span className="text-gray-400 ml-1">
-          ({formatCurrency(secondaryAmount, "USD")})
-        </span>
-      </>
-    );
-  };
 
   const getDocumentStatus = () => {
     return document.type === "received" ? "Recibida" : document.type;
@@ -58,7 +26,11 @@ export function DocumentItem({ document, isSelected, onSelect, referenceId }) {
         <span className="text-gray-400">({document.organization_id})</span>
       </div>
 
-      <div className="flex-1">{getAmountDisplay()}</div>
+      <div className="flex-1">
+        <span className="text-gray-900 font-bold">
+          {getFormattedAmounts(document).displayText}
+        </span>
+      </div>
 
       <div className="w-24 text-right text-gray-500">
         {isInvoice ? getDocumentStatus() : referenceId}

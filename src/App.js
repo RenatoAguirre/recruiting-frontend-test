@@ -98,7 +98,12 @@ function App() {
           </div>
         )}
 
-        <SuccessModal isOpen={isModalOpen} onContinue={handleContinue} />
+        <SuccessModal
+          isOpen={isModalOpen}
+          onContinue={handleContinue}
+          invoice={selectedInvoice}
+          creditNote={selectedCreditNote}
+        />
       </div>
     </div>
   );
