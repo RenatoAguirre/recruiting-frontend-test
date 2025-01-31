@@ -1,16 +1,9 @@
 import { ModalPropTypes } from "../types/propTypes";
 import PropTypes from "prop-types";
-import { formatCurrency, getAmountInCLP } from "../utils/currency";
+import { AssignmentSummary } from "./AssignmentSummary";
 
 export function SuccessModal({ isOpen, onContinue, invoice, creditNotes }) {
   if (!isOpen) return null;
-
-  const invoiceAmount = getAmountInCLP(invoice);
-  const totalCreditAmount = creditNotes.reduce(
-    (total, note) => total + getAmountInCLP(note),
-    0
-  );
-  const remainingAmount = invoiceAmount - totalCreditAmount;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -23,38 +16,12 @@ export function SuccessModal({ isOpen, onContinue, invoice, creditNotes }) {
         </h2>
 
         <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
-          <div className="space-y-3">
-            <div>
-              <p className="text-sm text-gray-500 mb-1">Factura</p>
-              <div className="flex justify-between">
-                <span className="text-gray-700">{invoice.id}</span>
-                <span className="font-medium">
-                  {formatCurrency(invoiceAmount, "CLP")} CLP
-                </span>
-              </div>
-            </div>
-
-            {creditNotes.map((note) => (
-              <div key={note.id}>
-                <p className="text-sm text-gray-500 mb-1">Nota de crédito</p>
-                <div className="flex justify-between">
-                  <span className="text-gray-700">{note.id}</span>
-                  <span className="font-medium text-red-600">
-                    -{formatCurrency(getAmountInCLP(note), "CLP")} CLP
-                  </span>
-                </div>
-              </div>
-            ))}
-
-            <div className="pt-3 border-t">
-              <div className="flex justify-between">
-                <span className="font-medium">Monto restante</span>
-                <span className="font-medium text-green-600">
-                  {formatCurrency(remainingAmount, "CLP")} CLP
-                </span>
-              </div>
-            </div>
-          </div>
+          <AssignmentSummary
+            invoice={invoice}
+            creditNotes={creditNotes}
+            showWarning={false}
+            variant="modal"
+          />
         </div>
 
         <button

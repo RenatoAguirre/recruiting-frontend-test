@@ -4,6 +4,7 @@ import { SuccessModal } from "./components/SuccessModal";
 import { DocumentItem } from "./components/DocumentItem";
 import { useInvoices } from "./hooks/useInvoices";
 import { getAmountInCLP } from "./utils/currency";
+import { AssignmentSummary } from "./components/AssignmentSummary";
 
 function App() {
   const { regularInvoices, creditNotes, isLoading, error } = useInvoices();
@@ -108,40 +109,30 @@ function App() {
             </div>
 
             {selectedCreditNotes.length > 0 && (
-              <div className="mt-4 bg-white rounded-xl shadow-sm p-4">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <p className="text-sm text-gray-500">Total seleccionado</p>
-                    <p className="text-lg font-medium">
-                      {selectedCreditNotes.length} nota
-                      {selectedCreditNotes.length !== 1 ? "s" : ""} de crédito
-                    </p>
-                  </div>
-                  {!canAssign && (
-                    <p className="text-red-500 text-sm">
-                      El monto total excede el valor de la factura
-                    </p>
-                  )}
+              <>
+                <div className="mt-4 bg-white rounded-xl shadow-sm p-6">
+                  <AssignmentSummary
+                    invoice={selectedInvoice}
+                    creditNotes={selectedCreditNotes}
+                  />
                 </div>
-              </div>
+
+                <div className="mt-6 flex justify-center">
+                  <button
+                    className={`px-8 py-3 rounded-lg text-base font-medium transition-colors ${
+                      canAssign
+                        ? "bg-indigo-500 text-white hover:bg-indigo-600"
+                        : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    }`}
+                    onClick={handleAssign}
+                    disabled={!canAssign}
+                  >
+                    Asignar
+                  </button>
+                </div>
+              </>
             )}
           </>
-        )}
-
-        {selectedCreditNotes.length > 0 && (
-          <div className="mt-8 flex justify-center">
-            <button
-              className={`px-8 py-3 rounded-lg text-base font-medium transition-colors ${
-                canAssign
-                  ? "bg-indigo-500 text-white hover:bg-indigo-600"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
-              }`}
-              onClick={handleAssign}
-              disabled={!canAssign}
-            >
-              Asignar
-            </button>
-          </div>
         )}
 
         <SuccessModal
