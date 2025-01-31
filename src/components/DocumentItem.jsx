@@ -1,7 +1,14 @@
 import { DocumentItemPropTypes } from "../types/propTypes";
 import { getFormattedAmounts } from "../utils/currency";
+import PropTypes from "prop-types";
 
-export function DocumentItem({ document, isSelected, onSelect, referenceId }) {
+export function DocumentItem({
+  document,
+  isSelected,
+  onSelect,
+  referenceId,
+  type = "radio",
+}) {
   const isInvoice = document.type !== "credit_note";
 
   const getDocumentStatus = () => {
@@ -16,7 +23,7 @@ export function DocumentItem({ document, isSelected, onSelect, referenceId }) {
       onClick={() => onSelect(document)}
     >
       <input
-        type="radio"
+        type={type}
         className="w-4 h-4 text-indigo-500 focus:ring-indigo-400 mr-4"
         checked={isSelected}
         onChange={() => onSelect(document)}
@@ -39,4 +46,8 @@ export function DocumentItem({ document, isSelected, onSelect, referenceId }) {
   );
 }
 
-DocumentItem.propTypes = DocumentItemPropTypes;
+//aca quizas podría separar los tipos de documentos en componentes diferentes, al principio los deje en el mismo pq senti que se repetía mucho codigo
+DocumentItem.propTypes = {
+  ...DocumentItemPropTypes,
+  type: PropTypes.oneOf(["radio", "checkbox"]),
+};

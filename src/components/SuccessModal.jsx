@@ -2,12 +2,15 @@ import { ModalPropTypes } from "../types/propTypes";
 import PropTypes from "prop-types";
 import { formatCurrency, getAmountInCLP } from "../utils/currency";
 
-export function SuccessModal({ isOpen, onContinue, invoice, creditNote }) {
+export function SuccessModal({ isOpen, onContinue, invoice, creditNotes }) {
   if (!isOpen) return null;
 
   const invoiceAmount = getAmountInCLP(invoice);
-  const creditNoteAmount = getAmountInCLP(creditNote);
-  const remainingAmount = invoiceAmount - creditNoteAmount;
+  const totalCreditAmount = creditNotes.reduce(
+    (total, note) => total + getAmountInCLP(note),
+    0
+  );
+  const remainingAmount = invoiceAmount - totalCreditAmount;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -16,7 +19,7 @@ export function SuccessModal({ isOpen, onContinue, invoice, creditNote }) {
           <span className="text-white text-2xl">✓</span>
         </div>
         <h2 className="text-xl font-semibold mb-6">
-          Nota de crédito asignada correctamente
+          Notas de crédito asignadas correctamente
         </h2>
 
         <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
@@ -31,15 +34,17 @@ export function SuccessModal({ isOpen, onContinue, invoice, creditNote }) {
               </div>
             </div>
 
-            <div>
-              <p className="text-sm text-gray-500 mb-1">Nota de crédito</p>
-              <div className="flex justify-between">
-                <span className="text-gray-700">{creditNote.id}</span>
-                <span className="font-medium text-red-600">
-                  -{formatCurrency(creditNoteAmount, "CLP")} CLP
-                </span>
+            {creditNotes.map((note) => (
+              <div key={note.id}>
+                <p className="text-sm text-gray-500 mb-1">Nota de crédito</p>
+                <div className="flex justify-between">
+                  <span className="text-gray-700">{note.id}</span>
+                  <span className="font-medium text-red-600">
+                    -{formatCurrency(getAmountInCLP(note), "CLP")} CLP
+                  </span>
+                </div>
               </div>
-            </div>
+            ))}
 
             <div className="pt-3 border-t">
               <div className="flex justify-between">
@@ -70,9 +75,11 @@ SuccessModal.propTypes = {
     amount: PropTypes.number.isRequired,
     currency: PropTypes.string.isRequired,
   }),
-  creditNote: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    amount: PropTypes.number.isRequired,
-    currency: PropTypes.string.isRequired,
-  }),
+  creditNotes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
+      currency: PropTypes.string.isRequired,
+    })
+  ),
 };
