@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://recruiting.api.bemmbo.com/invoices/pending";
+const API_URL = "https://recruiting.api.bemmbo.com/invoices/pending"; //esto podría ir en un archivo de configuración o un .env
 
 const fetchInvoices = async () => {
   try {
